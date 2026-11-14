@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ivory: #fffdf8;
+  --cream: #fbf6ec;
+  --mist: #edf7ff;
+  --sky: #cfe6fb;
+  --baby: #9ec9f2;
+  --ocean: #4f8fd0;
+  --gold: #b8922e;
+  --champagne: #ead9bd;
+  --sun: #fde9a2;
+  --ink: #24415f;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-cream font-sans text-ink antialiased; }
+::selection { background: var(--sky); color: var(--ink); }
+:focus-visible { outline: 3px solid var(--ocean); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
