@@ -26,8 +26,25 @@ export const CONFIG = {
 
   musicFile: '/music/just.mp4',
 
-  // Photo paths inside /public/images, e.g. '/images/photo1.jpg'. Leave '' to show a placeholder.
-  photos: ['', '', '', '', '', ''],
+  // "My Little World" gallery. Files are in /public/images/little/
+  // Photos (.jpg/.png) and videos (.mp4) both work. Add or remove lines freely.
+  photos: [
+    '/images/little/1.jpg',
+    '/images/little/2.jpg',
+    '/images/little/3.jpg',
+    '/images/little/4.jpg',
+    '/images/little/5.jpg',
+    '/images/little/6.mp4'
+  ],
+  // One caption per item above, in the same order.
+  photoCaptions: [
+    'The beginning of a beautiful little story.',
+    'A smile that makes every day brighter.',
+    'Little moments, endless happiness.',
+    'Growing up surrounded by love.',
+    'Our favorite little sunshine.',
+    'One little boy, a whole lot of love.'
+  ],
   milestoneImages: Array(12).fill(''),
 
   // One album per month, in order: index 0 = Month 1 ... index 11 = Month 12.

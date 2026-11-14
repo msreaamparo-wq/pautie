@@ -1,10 +1,10 @@
-
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   ChevronLeft,
   ChevronRight,
   Heart,
+  Play,
   Sparkles,
   X,
 } from 'lucide-react';
@@ -20,8 +20,11 @@ const captions = [
   'One little boy, a whole lot of love.',
 ];
 
+const isVideo = (src) => /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(src || '');
+
 export default function Gallery() {
   const photos = CONFIG.photos || [];
+  const captionList = CONFIG.photoCaptions && CONFIG.photoCaptions.length ? CONFIG.photoCaptions : captions;
   const [active, setActive] = useState(0);
   const [viewer, setViewer] = useState(false);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
@@ -70,7 +73,7 @@ export default function Gallery() {
   if (!total) return null;
 
   const currentPhoto = photos[active];
-  const currentCaption = captions[active % captions.length];
+  const currentCaption = captionList[active % captionList.length];
 
   return (
     <Section id="gallery" title="">
@@ -215,6 +218,34 @@ export default function Gallery() {
             background: linear-gradient(145deg, #e3f0fc, #d3e6f8);
           }
 
+          .lw-image { position: relative; }
+
+          .lw-image video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #dbe9f6;
+          }
+
+          .lw-play-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background: rgba(36,65,95,.72);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            pointer-events: none;
+          }
+
           .lw-image img {
             display: block;
             width: 100%;
@@ -356,6 +387,23 @@ export default function Gallery() {
             cursor: pointer;
           }
 
+          .lw-thumb video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          .lw-thumb-play {
+            position: absolute;
+            inset: 4px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            background: rgba(36,65,95,.32);
+            pointer-events: none;
+          }
+
           .lw-thumb img {
             display: block;
             width: 100%;
@@ -461,6 +509,13 @@ export default function Gallery() {
             padding: 12px 12px 0;
             background: #fffdf8;
             box-shadow: 0 25px 80px rgba(0,0,0,.35);
+          }
+
+          .lw-viewer-content video {
+            display: block;
+            width: 100%;
+            max-height: 72vh;
+            background: #000;
           }
 
           .lw-viewer-content img {
@@ -603,7 +658,24 @@ export default function Gallery() {
                 >
                   <div className="lw-image">
                     {currentPhoto ? (
-                      <img src={currentPhoto} alt={`Shaun Matthew memory ${active + 1}`} />
+                      isVideo(currentPhoto) ? (
+                        <>
+                          <video
+                            key={currentPhoto}
+                            src={currentPhoto}
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                          />
+                          <span className="lw-play-badge">
+                            <Play size={13} fill="currentColor" /> Video
+                          </span>
+                        </>
+                      ) : (
+                        <img src={currentPhoto} alt={`Shaun Matthew memory ${active + 1}`} />
+                      )
                     ) : (
                       <div className="lw-placeholder">
                         <div className="lw-placeholder-icon">
@@ -659,7 +731,16 @@ export default function Gallery() {
                 aria-pressed={active === index}
               >
                 {photo ? (
-                  <img src={photo} alt="" />
+                  isVideo(photo) ? (
+                    <>
+                      <video src={`${photo}#t=0.1`} muted playsInline preload="metadata" />
+                      <span className="lw-thumb-play">
+                        <Play size={14} fill="currentColor" />
+                      </span>
+                    </>
+                  ) : (
+                    <img src={photo} alt="" />
+                  )
                 ) : (
                   <div className="lw-thumb-placeholder">
                     <Heart size={15} />
@@ -731,7 +812,11 @@ export default function Gallery() {
               </button>
 
               {currentPhoto ? (
-                <img src={currentPhoto} alt={`Shaun Matthew memory ${active + 1}`} />
+                isVideo(currentPhoto) ? (
+                  <video key={currentPhoto} src={currentPhoto} controls autoPlay loop playsInline />
+                ) : (
+                  <img src={currentPhoto} alt={`Shaun Matthew memory ${active + 1}`} />
+                )
               ) : (
                 <div className="lw-placeholder" style={{ aspectRatio: '4 / 5' }}>
                   <Heart size={32} />
@@ -740,7 +825,7 @@ export default function Gallery() {
               )}
 
               <div className="lw-viewer-label">
-                {captions[active % captions.length]}
+                {captionList[active % captionList.length]}
               </div>
 
               <button
