@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import Scene3D from '../components/Scene3D.jsx';
-import { music } from '../audio.js';
 import { CONFIG } from '../config.js';
 export default function Hero() {
-  const open = () => { music.start(); document.getElementById('invitation')?.scrollIntoView({ behavior: 'smooth' }); };
+  const open = () => { document.getElementById('invitation')?.scrollIntoView({ behavior: 'smooth' }); };
   return (
     <header className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-sky via-cream to-cream px-5 pb-10 pt-8 text-center">
       <motion.p initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="font-serif text-lg font-semibold text-gold">ONE WHOLE YEAR OF LOVE!</motion.p>

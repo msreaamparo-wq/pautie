@@ -6,6 +6,7 @@ const album = (folder, prefix, count) =>
 
 export const CONFIG = {
   name: 'Shaun Matthew Inson',
+  fullName: 'Shaun Matthew Amparo Inson', // shown as a handwritten signature on the opening screen
   startsAt: '2027-01-05T17:00:00+08:00', // Philippine Time (Asia/Manila)
   dateDisplay: 'January 5, 2027',
   timeDisplay: '5:00 PM',
